@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Mac system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Coverage (if using tests)
+coverage/
+
+# React-specific
+*.cache
+.cache/
+.next/
+out/
+
+# MongoDB local data (if included)
+data/
+dump/
+
+# Others
+*.swp
+*.swo
