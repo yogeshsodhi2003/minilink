@@ -5,12 +5,23 @@ import User from "../models/user.model.js";
 // Create a new URL
 
 export const createUrl = async (req, res) => {
-  const { originalUrl, userId } = req.body;
+  const { originalUrl, customSlug, userId } = req.body;
   // if (!isValidUrl(originalUrl)) {
   //     return res.status(400).json({ message: "Invalid URL format" });
   // }
   try {
-    const shortId = nanoid(6); // Generate a unique short ID
+
+  let shortId;
+
+  if (customSlug) {
+    const existing = await url.findOne({ shortId: customSlug });
+    if (existing) {
+      return res.status(400).json({ message: "Custom slug already in use" });
+    }
+    shortId = customSlug;
+  } else {
+    shortId = nanoid(6);
+  }
     const newUrl = new url({
       originalUrl,
       shortId,
@@ -38,6 +49,34 @@ export const getUrlByShortId = async (req, res) => {
     res.redirect(urlData.originalUrl); // Redirect to the original URL
   } catch (error) {
     console.error("Error fetching URL:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getUserUrls = async (req, res) => {
+  const userId = req.params.userId; // Assuming user ID is attached to the request
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  try {
+    const urls = await url.find({ user: userId });
+    res.status(200).json(urls);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteUrl = async (req, res) => {
+  const { id } = req.params; // Assuming URL ID is passed as a parameter
+  try {
+    const deletedUrl = await url.findByIdAndDelete(id);
+    if (!deletedUrl) {
+      return res.status(404).json({ message: "URL not found" });
+    }
+    res.status(200).json({ message: "URL deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting URL:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

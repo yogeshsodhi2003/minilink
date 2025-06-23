@@ -1,18 +1,17 @@
-import React  , {useState, useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 
 const Navbar = () => {
-     const [isAuth, setIsAuth] = useState(false)
+  const isAuth = useSelector((state) => state.user.isAuthenticated);
+  const dispatch = useDispatch();
 
 
-    useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuth(!!token); // true if token exists
-  }, []);
 
-    const handleLogout = () => {
+  const handleLogout = () => {
+    dispatch(logout());
     localStorage.removeItem("token");
-    setIsAuth(false);
     navigate("/login");
   };
 
@@ -31,7 +30,10 @@ const Navbar = () => {
         {isAuth ? (
           <>
             <Link to="/dashboard">Dashboard</Link>
-            <button onClick={handleLogout} className="bg-[#ff2969] hover:bg-pink-600 px-4 py-2 rounded-xl text-white transition">
+            <button
+              onClick={handleLogout}
+              className="bg-[#ff2969] hover:bg-pink-600 px-4 py-2 rounded-xl text-white transition"
+            >
               Logout
             </button>
           </>

@@ -5,11 +5,13 @@ import userRoutes from "./routes/user.route.js";
 import urlRouter from "./routes/url.route.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import morgan from "morgan";
 dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev")); // Logging middleware for development
 const PORT = process.env.PORT || 3000;
 app.use(
   cors({

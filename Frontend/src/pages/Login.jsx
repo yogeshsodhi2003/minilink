@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/userSlice";
 
 const Login = () => {
+
+  const dispatch = useDispatch()
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -22,11 +27,17 @@ const Login = () => {
     try {
       const res = await axios.post(
         "http://localhost:3000/user/login",
-        formData,
+        formData
+      );
+      // after successful login
+      dispatch(
+        setCredentials({
+          user: res.data.user,
+          token: res.data.token,
+        })
       );
       const token = res.data.token;
       localStorage.setItem("token", token);
-
       navigate("/");
       console.log(res.data);
     } catch (err) {
