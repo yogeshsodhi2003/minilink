@@ -23,7 +23,7 @@ const Dashboard = () => {
       const userId = user.userId;
       try {
         const res = await axios.get(
-          `http://localhost:3000/url/allurls/${userId}`
+          `http://localhost:3000/allurls/${userId}`
         );
         setUrls(res.data);
       } catch (err) {
@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/url/${id}`, {});
+      await axios.delete(`http://localhost:3000/${id}`, {});
       setUrls((prev) => prev.filter((url) => url._id !== id));
     } catch (err) {
       console.error("Error deleting URL:", err);
@@ -140,16 +140,16 @@ const Dashboard = () => {
 
                   <p className="text-sm text-white/60 mt-2">Short:</p>
                   <a
-                    href={`http://localhost:3000/url/${url.shortId}`}
+                    href={`http://localhost:3000/${url.shortId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-[#ff2969] font-mono hover:underline break-all"
                   >
-                    http://localhost:3000/url/{url.shortId}
+                    http://localhost:3000/{url.shortId}
                   </a>
                   <button
                     onClick={() =>
-                      handleCopy(`http://localhost:3000/url/${url.shortId}`)
+                      handleCopy(`http://localhost:3000/${url.shortId}`)
                     }
                     className="bg-black text-white px-2 py-1 rounded mt-2 hover:bg-gray-800"
                   >

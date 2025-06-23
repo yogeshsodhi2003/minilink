@@ -20,7 +20,7 @@ const Home = () => {
     const originalUrl = url;
     const userId = user?.userId;
     try {
-      const res = await axios.post("http://localhost:3000/url/shorten", {
+      const res = await axios.post("http://localhost:3000/shorten", {
         originalUrl,
         customSlug: customSlug.trim(), // send custom slug
         userId,
@@ -62,14 +62,14 @@ const Home = () => {
     });
   };
 
-  const testurl = "https://redux-toolkit.js.org/tutorials/quick-start";
+  
 
   return (
     <>
       <Navbar />
       <main className="min-h-screen bg-[#0d0d0d] text-white flex flex-col items-center justify-center px-4">
         <h1 className="text-4xl sm:text-6xl font-black mb-4 text-[#ff2969] tracking-tight text-center">
-          SnapMy.Link 🔗
+          Minilink 🔗
         </h1>
         <p className="text-center text-white/70 max-w-md mb-8">
           Paste a long URL and we’ll shrink it down for easy sharing. No fluff.

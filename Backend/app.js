@@ -25,7 +25,7 @@ app.use(
 connectDB();
 
 app.use("/user", userRoutes);
-app.use("/url", urlRouter);
+app.use("/", urlRouter);
 
 app.get("/", (req, res) => {
   res.send(nanoid(6));
