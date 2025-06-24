@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const user = useSelector((state) => state.user.user);
 
@@ -22,9 +23,7 @@ const Dashboard = () => {
     const fetchUrls = async () => {
       const userId = user.userId;
       try {
-        const res = await axios.get(
-          `www.myminilink.xyz/allurls/${userId}`
-        );
+        const res = await axios.get(`${backendUrl}/allurls/${userId}`);
         setUrls(res.data);
       } catch (err) {
         console.error("Error fetching URLs:", err);
@@ -36,10 +35,9 @@ const Dashboard = () => {
     fetchUrls();
   }, []);
 
-
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`www.myminilink.xyz/${id}`, {});
+      await axios.delete(`${backendUrl}/${id}`, {});
       setUrls((prev) => prev.filter((url) => url._id !== id));
     } catch (err) {
       console.error("Error deleting URL:", err);
@@ -140,16 +138,16 @@ const Dashboard = () => {
 
                   <p className="text-sm text-white/60 mt-2">Short:</p>
                   <a
-                    href={`www.myminilink.xyz/${url.shortId}`}
+                    href={`${backendUrl}/${url.shortId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block text-[#ff2969] font-mono hover:underline break-all"
                   >
-                    www.myminilink.xyz/{url.shortId}
+                    {backendUrl}/{url.shortId}
                   </a>
                   <button
                     onClick={() =>
-                      handleCopy(`www.myminilink.xyz/${url.shortId}`)
+                      handleCopy(`${backendUrl}/${url.shortId}`)
                     }
                     className="bg-black text-white px-2 py-1 rounded mt-2 hover:bg-gray-800"
                   >

@@ -6,6 +6,7 @@ import { QRCodeCanvas } from "qrcode.react";
 import axios from "axios";
 
 const Home = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [customSlug, setCustomSlug] = useState("");
@@ -20,7 +21,7 @@ const Home = () => {
     const originalUrl = url;
     const userId = user?.userId;
     try {
-      const res = await axios.post("www.myminilink.xyz/shorten", {
+      const res = await axios.post(`${backendUrl}/shorten`, {
         originalUrl,
         customSlug: customSlug.trim(), // send custom slug
         userId,
@@ -61,8 +62,6 @@ const Home = () => {
       }
     });
   };
-
-  
 
   return (
     <>

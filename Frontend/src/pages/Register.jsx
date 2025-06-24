@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/userSlice";
 
 const Register = () => {
+   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const Register = () => {
 
     try {
       const res = await axios.post(
-        "www.myminilink.xyz/user/register",
+        `${backendUrl}/user/register`,
         formData
       );
 

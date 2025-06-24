@@ -6,6 +6,7 @@ import { setCredentials } from "../redux/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -23,11 +24,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Logging in:", formData);
-    try {z
-      const res = await axios.post(
-        "www.myminilink.xyz/user/login",
-        formData
-      );
+    try {
+      const res = await axios.post(`${backendUrl}/user/login`, formData);
       // after successful login
       dispatch(
         setCredentials({
