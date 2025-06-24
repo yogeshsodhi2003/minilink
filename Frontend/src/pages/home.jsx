@@ -20,7 +20,7 @@ const Home = () => {
     const originalUrl = url;
     const userId = user?.userId;
     try {
-      const res = await axios.post("http://localhost:3000/shorten", {
+      const res = await axios.post("www.myminilink.xyz/shorten", {
         originalUrl,
         customSlug: customSlug.trim(), // send custom slug
         userId,

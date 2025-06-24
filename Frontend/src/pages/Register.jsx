@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/userSlice";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,14 +21,27 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Registering:", formData);
     // 🛠️ You can call your API here to register the user
-    
+
     try {
-      const res = await axios.post("http://localhost:3000/user/register", formData);
-      console.log("User registered:", res.data);
+      const res = await axios.post(
+        "www.myminilink.xyz/user/register",
+        formData
+      );
+
+      // after successful register
+      dispatch(
+        setCredentials({
+          user: res.data.user,
+          token: res.data.token,
+        })
+      );
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      navigate("/");
     } catch (err) {
       console.error("Registration failed:", err.response?.data || err.message);
     }

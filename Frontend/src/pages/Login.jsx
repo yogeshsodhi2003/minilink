@@ -5,8 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/userSlice";
 
 const Login = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,9 +23,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Logging in:", formData);
-    try {
+    try {z
       const res = await axios.post(
-        "http://localhost:3000/user/login",
+        "www.myminilink.xyz/user/login",
         formData
       );
       // after successful login
@@ -39,7 +38,6 @@ const Login = () => {
       const token = res.data.token;
       localStorage.setItem("token", token);
       navigate("/");
-      console.log(res.data);
     } catch (err) {
       console.log("Error", err);
     }
