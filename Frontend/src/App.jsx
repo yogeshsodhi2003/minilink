@@ -1,6 +1,5 @@
-import React , {useState}from "react";
+import React, { useState } from "react";
 import Home from "./pages/home";
-import Navbar from "./components/Navbar.jsx";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -9,10 +8,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./redux/userSlice";
 
-
 const App = () => {
-  const dispatch = useDispatch()
-   const [loading, setLoading] = useState(true); // new state 
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true); // new state
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -30,9 +28,9 @@ const App = () => {
       const user = JSON.parse(jsonPayload);
       dispatch(setCredentials({ user, token }));
     }
-      setLoading(false); // hydration done
+    setLoading(false); // hydration done
   }, []);
-   if (loading) return <p>Loading...</p>; // wait till store is ready
+  if (loading) return <p>Loading...</p>; // wait till store is ready
   return (
     <div>
       <Routes>
