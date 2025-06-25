@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
+import { Copy } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 
@@ -20,8 +21,9 @@ const Dashboard = () => {
 
   //Fetch URLs for logged-in user
   useEffect(() => {
+    if (!user?.id) return; // wait for user to be ready
     const fetchUrls = async () => {
-      const userId = user.userId;
+      const userId = user.id;
       try {
         const res = await axios.get(`${backendUrl}/allurls/${userId}`);
         setUrls(res.data);
@@ -33,7 +35,7 @@ const Dashboard = () => {
     };
 
     fetchUrls();
-  }, []);
+  }, [user]);
 
   const handleDelete = async (id) => {
     try {
@@ -86,18 +88,18 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-[#0d0d0d] text-white px-6 py-24">
+      <div className="min-h-screen  px-6 py-24">
         <input
           type="text"
           placeholder="Search links..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded w-full mb-4"
+          className="w-full m-1 flex-1 p-3 rounded-4xl border-4 border-black-600 placeholder:80 outline-none"
         />
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
-          className="border p-2 rounded mb-4 ml-2"
+          className="p-3 rounded-4xl border-4 border-black-600 placeholder:80 outline-none m-1"
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -110,15 +112,15 @@ const Dashboard = () => {
         </h1>
 
         {loading ? (
-          <p className="text-white/60">Loading your links...</p>
+          <p className="60">Loading your links...</p>
         ) : urls.length === 0 ? (
-          <p className="text-white/60">You haven’t shortened any links yet.</p>
+          <p className="60">Not shortened any links yet.</p>
         ) : (
           <div className="space-y-4">
             {filteredUrls.map((url) => (
               <div
                 key={url._id}
-                className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl flex justify-between items-center"
+                className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl flex-col justify-between items-center"
               >
                 {/* 🔥 Expiry countdown */}
                 <p className="text-sm text-gray-600">
@@ -137,27 +139,28 @@ const Dashboard = () => {
                   </a>
 
                   <p className="text-sm text-white/60 mt-2">Short:</p>
-                  <a
-                    href={`${backendUrl}/${url.shortId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-[#ff2969] font-mono hover:underline break-all"
-                  >
-                    {backendUrl}/{url.shortId}
-                  </a>
-                  <button
-                    onClick={() =>
-                      handleCopy(`${backendUrl}/${url.shortId}`)
-                    }
-                    className="bg-black text-white px-2 py-1 rounded mt-2 hover:bg-gray-800"
-                  >
-                    {copiedId ? "Copied!" : "Copy"}
-                  </button>
+                  <div className="flex gap-3">
+                    <a
+                      href={`${backendUrl}/${url.shortId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-[#ff2969] font-mono hover:underline break-all"
+                    >
+                      {backendUrl}/{url.shortId}
+                    </a>
+                    <button
+                      onClick={() => handleCopy(`${backendUrl}/${url.shortId}`)}
+                      className="bg-black text-white px-2 py-1 rounded  hover:bg-gray-800"
+                    >
+                      {" "}
+                      <Copy size={15} />
+                    </button>
+                  </div>
                 </div>
 
                 <button
                   onClick={() => handleDelete(url._id)}
-                  className="ml-4 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-xl text-sm"
+                  className="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-xl text-sm"
                 >
                   Delete
                 </button>

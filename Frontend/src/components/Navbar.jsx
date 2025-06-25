@@ -2,31 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const dispatch = useDispatch();
-
-
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
-    <nav className="w-full bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between items-center shadow-sm fixed top-0 z-50">
+    <nav className="w-full    px-6 py-4 flex justify-between items-center shadow-xl fixed top-0 z-50">
       {/* Left: Logo */}
       <Link
         to="/"
         className="text-2xl font-black tracking-tight text-[#ff2969]"
       >
-        MiniLink 🚀
+        Myminilink 🔗
       </Link>
 
       {/* Right: Nav Links */}
-      <div className="flex gap-6 items-center text-white text-sm font-medium">
+      <div className="flex gap-6 items-center  text-sm font-medium">
         {isAuth ? (
           <>
             <Link to="/dashboard">Dashboard</Link>

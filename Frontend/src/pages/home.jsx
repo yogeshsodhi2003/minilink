@@ -66,11 +66,11 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#0d0d0d] text-white flex flex-col items-center justify-center px-4">
+      <main className="min-h-screen   flex flex-col items-center pt-25 px-4">
         <h1 className="text-4xl sm:text-6xl font-black mb-4 text-[#ff2969] tracking-tight text-center">
-          Minilink 🔗
+          Myminilink 🔗
         </h1>
-        <p className="text-center text-white/70 max-w-md mb-8">
+        <p className="text-center text-70 max-w-md mb-8">
           Paste a long URL and we’ll shrink it down for easy sharing. No fluff.
           No ads. Just clean links.
         </p>
@@ -84,18 +84,18 @@ const Home = () => {
             placeholder="https://really-long-link.com/stuff"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1 p-3 rounded-2xl bg-zinc-900 text-white placeholder:text-white/50 outline-none"
+            className="flex-1 p-3 rounded-4xl border-4 border-black-600 placeholder:80 outline-none"
           />
           <input
             type="text"
             value={customSlug}
             onChange={(e) => setCustomSlug(e.target.value)}
             placeholder="Custom slug (e.g. ashu-link)"
-            className="flex-1 p-3 rounded-2xl bg-zinc-900 text-white placeholder:text-white/50 outline-none"
+            className="flex-1 p-3 rounded-4xl border-4 border-black-600   placeholder:50 outline-none"
           />
           <button
             type="submit"
-            className="bg-[#ff2969] text-white px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition"
+            className="bg-[#ff2969]  text-white  px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition"
           >
             Shorten
           </button>
@@ -103,8 +103,10 @@ const Home = () => {
 
         {shortUrl && (
           <>
-            <div className="mt-8 bg-zinc-800 px-6 py-4 rounded-xl">
-              <p className="text-white/80 text-sm mb-2">Your short URL:</p>
+            <div className="m-8 border-3  border-black-600 shadow-xl  px-6 py-4 rounded-xl">
+              <p className="80 text-sm mb-2">
+                Your short URL will expire in 30 days
+              </p>
               <a
                 href={shortUrl}
                 target="_blank"
@@ -114,15 +116,20 @@ const Home = () => {
                 {shortUrl}
               </a>
             </div>
-            <button onClick={handleqr}>Create QR code</button>
+            <button
+              onClick={handleqr}
+              className="bg-[#ff2969]  text-white  px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition"
+            >
+              Create QR code
+            </button>
           </>
         )}
         {/* ✅ QR CODE */}
         {showQR && (
-          <div className="mt-3 text-center">
+          <div className="m-3 text-center">
             <QRCodeCanvas
               id="qrCanvas"
-              value={testurl}
+              value={shortUrl}
               size={160}
               bgColor="#ffffff"
               fgColor="#000000"
@@ -132,7 +139,7 @@ const Home = () => {
 
             <button
               onClick={handleShareQR}
-              className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-[#ff2969] mt-3  text-white  px-6 py-3 rounded-2xl font-semibold hover:bg-pink-600 transition"
             >
               Share QR Code
             </button>
