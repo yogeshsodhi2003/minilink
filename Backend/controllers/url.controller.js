@@ -27,7 +27,7 @@ export const createUrl = async (req, res) => {
       shortId,
       user: userId ? new mongoose.Types.ObjectId(userId) : null, // Optional user association
     });
-    res.status(201).json({ shortUrl: `http://localhost:3000/${shortId}` });
+    res.status(201).json({ shortUrl: `http://myminilink.xyz/${shortId}` });
     await newUrl.save();
   } catch (error) {
     console.error("Error creating URL:", error);

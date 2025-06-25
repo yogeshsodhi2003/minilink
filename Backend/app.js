@@ -1,5 +1,4 @@
 import express from "express";
-import { nanoid } from "nanoid";
 import connectDB from "./db.js";
 import userRoutes from "./routes/user.route.js";
 import urlRouter from "./routes/url.route.js";
@@ -28,7 +27,10 @@ app.use("/user", userRoutes);
 app.use("/", urlRouter);
 
 app.get("/", (req, res) => {
-  res.send(nanoid(6));
+  res.send(
+    `<h1>Welcome to the URL Shortener API</h1>
+     <p>Use the endpoints to shorten URLs, manage users, and more.</p>`
+  );
 });
 
 app.listen(PORT, () => {
