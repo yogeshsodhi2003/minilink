@@ -24,7 +24,6 @@ const App = () => {
           })
           .join("")
       );
-
       const user = JSON.parse(jsonPayload);
       dispatch(setCredentials({ user, token }));
     }
